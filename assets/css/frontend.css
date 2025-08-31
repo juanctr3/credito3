@@ -53,3 +53,13 @@
     opacity: 0.5;
     cursor: not-allowed;
 }
+/* Resaltar plan seleccionado */
+.wcps-plan-selected {
+    background-color: #f0f8ff !important;
+    border: 2px solid #0073aa !important;
+    box-shadow: 0 0 10px rgba(0,115,170,0.3);
+}
+
+.wcps-plan {
+    transition: all 0.3s ease;
+}
