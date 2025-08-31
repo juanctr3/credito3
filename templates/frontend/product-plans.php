@@ -65,11 +65,17 @@ if ( ! defined( 'ABSPATH' ) ) {
                             <tbody>
                                 <?php for ( $i = 1; $i <= $plan->max_installments; $i++ ) : 
                                     $due_date = new DateTime();
-                                    $interval_string = match($plan->payment_frequency) {
-                                        'weekly' => "P{$i}W",
-                                        'biweekly' => "P" . ($i * 2) . "W",
-                                        default => "P{$i}M",
-                                    };
+                                    switch($plan->payment_frequency) {
+    case 'weekly':
+        $interval_string = "P{$i}W";
+        break;
+    case 'biweekly':
+        $interval_string = "P" . ($i * 2) . "W";
+        break;
+    default:
+        $interval_string = "P{$i}M";
+        break;
+};
                                     $due_date->add(new DateInterval($interval_string));
                                 ?>
                                 <tr>
