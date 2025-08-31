@@ -1,65 +1,263 @@
+/* Contenedor principal de planes */
 .wcps-plans-container {
     border: 1px solid #e0e0e0;
     padding: 15px;
     margin-top: 20px;
+    margin-bottom: 20px;
     border-radius: 5px;
+    background: #fff;
 }
+
+/* Título de la sección */
+.wcps-plans-container h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+    color: #333;
+}
+
+/* Estilos para cada plan */
 .wcps-plan {
     border-bottom: 1px solid #f0f0f0;
     padding: 10px 0;
+    transition: all 0.3s ease;
 }
+
 .wcps-plan:last-child {
     border-bottom: none;
 }
-/* **NUEVO**: Estilo para la opción de pago completo para diferenciarla */
+
+/* Estilo para la opción de pago completo */
 .wcps-plan-full-payment {
     background-color: #f5f5f5;
     margin: -15px -15px 10px -15px;
     padding: 10px 15px;
     border-bottom: 1px solid #e0e0e0;
 }
+
+/* Header del plan */
 .wcps-plan-header {
     display: flex;
     align-items: center;
     cursor: pointer;
+    padding: 5px 0;
 }
+
 .wcps-plan-header label {
     flex-grow: 1;
     margin-left: 10px;
+    cursor: pointer;
 }
+
+/* Botón toggle para detalles */
 .wcps-toggle-details {
     font-size: 24px;
     font-weight: bold;
     color: #777;
     padding: 0 10px;
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.3s ease;
 }
+
+.wcps-toggle-details:hover {
+    color: #333;
+    transform: scale(1.2);
+}
+
+/* Detalles del plan */
 .wcps-plan-details {
     background-color: #f9f9f9;
     padding: 15px;
     margin-top: 10px;
     border-radius: 3px;
 }
+
 .wcps-plan-details ul {
     list-style: none;
     margin: 0;
     padding: 0;
 }
+
 .wcps-plan-details ul li {
     margin-bottom: 8px;
+    padding: 5px 0;
+    border-bottom: 1px dotted #e0e0e0;
 }
 
-/* **NUEVO**: Estilo para el botón de añadir al carrito deshabilitado */
-.single_add_to_cart_button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+.wcps-plan-details ul li:last-child {
+    border-bottom: none;
 }
-/* Resaltar plan seleccionado */
+
+/* Plan seleccionado */
 .wcps-plan-selected {
     background-color: #f0f8ff !important;
     border: 2px solid #0073aa !important;
     box-shadow: 0 0 10px rgba(0,115,170,0.3);
 }
 
-.wcps-plan {
-    transition: all 0.3s ease;
+.wcps-plan-selected .wcps-plan-header label {
+    color: #0073aa;
+    font-weight: bold;
+}
+
+/* Totales del plan */
+.wcps-plan-totals {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 15px 0;
+}
+
+.wcps-total-comparison {
+    display: grid;
+    gap: 10px;
+}
+
+.wcps-total-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.wcps-total-item:last-child {
+    border-bottom: none;
+}
+
+.wcps-total-item.wcps-interest {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.wcps-total-label {
+    font-weight: 500;
+}
+
+.wcps-total-value {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+/* Resumen del cronograma */
+.wcps-schedule-summary {
+    background: #e7f3ff;
+    padding: 10px;
+    border-radius: 4px;
+    margin: 10px 0;
+}
+
+/* Información adicional */
+.wcps-info-note {
+    background: #e7f3ff;
+    border-left: 4px solid #0073aa;
+    padding: 10px 15px;
+    margin: 15px 0;
+    border-radius: 0 4px 4px 0;
+}
+
+.wcps-info-reminder {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 8px 15px;
+    margin: 10px 0;
+    border-radius: 0 4px 4px 0;
+}
+
+/* Texto de ayuda */
+.wcps-help-text {
+    text-align: center;
+    margin-top: 15px;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 4px;
+}
+
+/* Resumen del plan */
+.wcps-plan-summary ul {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+}
+
+/* Botón de añadir al carrito deshabilitado */
+.single_add_to_cart_button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Responsive: Tablets */
+@media (min-width: 768px) {
+    .wcps-plan-summary ul {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* Responsive: Móviles */
+@media (max-width: 767px) {
+    .wcps-plans-container {
+        padding: 10px;
+        margin: 10px -10px;
+    }
+    
+    .wcps-plan-full-payment {
+        margin: -10px -10px 10px -10px;
+        padding: 10px;
+    }
+    
+    .wcps-toggle-details {
+        font-size: 20px;
+    }
+    
+    .wcps-total-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+    
+    .wcps-total-value {
+        font-size: 1.2em;
+    }
+    
+    .wcps-plan-details {
+        padding: 10px;
+    }
+    
+    .wcps-help-text {
+        font-size: 0.9em;
+    }
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.wcps-plan-details {
+    animation: fadeIn 0.3s ease;
+}
+
+/* Mejoras de accesibilidad */
+.wcps-plan-header input[type="radio"]:focus + label {
+    outline: 2px solid #0073aa;
+    outline-offset: 2px;
+}
+
+/* Print styles */
+@media print {
+    .wcps-toggle-details {
+        display: none;
+    }
+    
+    .wcps-plan-details {
+        display: block !important;
+    }
 }
