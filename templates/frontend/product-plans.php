@@ -10,8 +10,13 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 ?>
-<div class="wcps-plans-container">
+<!-- IMPORTANTE: Este div debe estar DENTRO del form.cart -->
+<div class="wcps-plans-container" data-product-id="<?php echo esc_attr( $product->get_id() ); ?>">
     <h3><?php esc_html_e( 'Elige tu forma de pago', 'wc-credit-payment-system' ); ?></h3>
+    
+    <!-- Campo hidden de respaldo para asegurar que el valor se envíe -->
+    <input type="hidden" id="wcps_selected_plan_backup" name="wcps_selected_plan_backup" value="">
+    
     <div class="wcps-accordion">
         
         <!-- Opción de pago completo -->
