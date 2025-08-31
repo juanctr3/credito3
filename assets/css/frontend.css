@@ -1,1 +1,55 @@
+.wcps-plans-container {
+    border: 1px solid #e0e0e0;
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 5px;
+}
+.wcps-plan {
+    border-bottom: 1px solid #f0f0f0;
+    padding: 10px 0;
+}
+.wcps-plan:last-child {
+    border-bottom: none;
+}
+/* **NUEVO**: Estilo para la opción de pago completo para diferenciarla */
+.wcps-plan-full-payment {
+    background-color: #f5f5f5;
+    margin: -15px -15px 10px -15px;
+    padding: 10px 15px;
+    border-bottom: 1px solid #e0e0e0;
+}
+.wcps-plan-header {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+.wcps-plan-header label {
+    flex-grow: 1;
+    margin-left: 10px;
+}
+.wcps-toggle-details {
+    font-size: 24px;
+    font-weight: bold;
+    color: #777;
+    padding: 0 10px;
+}
+.wcps-plan-details {
+    background-color: #f9f9f9;
+    padding: 15px;
+    margin-top: 10px;
+    border-radius: 3px;
+}
+.wcps-plan-details ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.wcps-plan-details ul li {
+    margin-bottom: 8px;
+}
 
+/* **NUEVO**: Estilo para el botón de añadir al carrito deshabilitado */
+.single_add_to_cart_button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
