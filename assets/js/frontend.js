@@ -1,1 +1,34 @@
-jQuery(document).ready(function($) { console.log('WCPS Frontend cargado'); // Lógica del acordeón $('.wcps-toggle-details').on('click', function(e) { e.preventDefault(); var $details = $(this).closest('.wcps-plan').find('.wcps-plan-details'); $details.slideToggle(); $(this).text($(this).text() === '+' ? '-' : '+'); }); // Validar selección antes de enviar $('form.cart').on('submit', function(e) { var $form = $(this); var $plansContainer = $form.find('.wcps-plans-container'); if ($plansContainer.length > 0) { var selectedPlan = $form.find('input[name="wcps_selected_plan"]:checked'); if (selectedPlan.length === 0) { e.preventDefault(); alert('Por favor, elige una opción de pago'); return false; } } }); // Destacar plan seleccionado $('input[name="wcps_selected_plan"]').on('change', function() { $('.wcps-plan').removeClass('wcps-plan-selected'); $(this).closest('.wcps-plan').addClass('wcps-plan-selected'); }); });
+jQuery(document).ready(function($) {
+    console.log('WCPS Frontend cargado correctamente');
+    
+    // Lógica del acordeón para mostrar/ocultar los detalles del plan
+    $('.wcps-toggle-details').on('click', function(e) {
+        e.preventDefault(); 
+        var $details = $(this).closest('.wcps-plan').find('.wcps-plan-details');
+        $details.slideToggle();
+        $(this).text($(this).text() === '+' ? '-' : '+');
+    });
+    
+    // Validar selección antes de enviar
+    $('form.cart').on('submit', function(e) {
+        var $form = $(this);
+        var $plansContainer = $form.find('.wcps-plans-container');
+        
+        if ($plansContainer.length > 0) {
+            var selectedPlan = $form.find('input[name="wcps_selected_plan"]:checked');
+            if (selectedPlan.length === 0) {
+                e.preventDefault();
+                alert('Por favor, elige una opción de pago para continuar.');
+                return false;
+            }
+            console.log('Plan seleccionado:', selectedPlan.val());
+        }
+    });
+    
+    // Destacar plan seleccionado
+    $('input[name="wcps_selected_plan"]').on('change', function() {
+        $('.wcps-plan').removeClass('wcps-plan-selected');
+        $(this).closest('.wcps-plan').addClass('wcps-plan-selected');
+        console.log('Plan cambiado a:', $(this).val());
+    });
+});
