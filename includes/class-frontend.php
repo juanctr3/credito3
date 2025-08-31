@@ -34,35 +34,58 @@ class WC_Credit_Frontend {
      * CORRECCIÓN PRINCIPAL: Validación mejorada que maneja correctamente todos los casos
      */
     public function validate_plan_selection( $passed, $product_id, $quantity ) {
-        // Solo validar si estamos en el proceso de añadir al carrito (no en actualizaciones)
-        if ( ! isset( $_POST['add-to-cart'] ) ) {
+        // Debug logging
+        error_log('WCPS Debug - validate_plan_selection llamado');
+        error_log('WCPS Debug - POST data: ' . print_r($_POST, true));
+        
+        // Solo validar si estamos en el proceso de añadir al carrito
+        // Verificar múltiples posibles nombres del campo
+        $is_adding_to_cart = isset( $_POST['add-to-cart'] ) || 
+                            isset( $_REQUEST['add-to-cart'] ) || 
+                            ( isset( $_POST['action'] ) && $_POST['action'] === 'woocommerce_add_to_cart' );
+        
+        if ( ! $is_adding_to_cart ) {
+            error_log('WCPS Debug - No es añadir al carrito, permitiendo');
             return $passed;
         }
 
         // Obtener planes disponibles para el producto
         $plans = WC_Credit_Payment_Plans::get_available_plans_for_product( $product_id );
+        
+        error_log('WCPS Debug - Planes encontrados: ' . count($plans));
 
         // Si no hay planes disponibles, permitir la compra normal
         if ( empty( $plans ) ) {
+            error_log('WCPS Debug - No hay planes, permitiendo compra normal');
             return $passed;
         }
 
-        // Si hay planes disponibles, verificar que se haya seleccionado una opción
-        if ( ! isset( $_POST['wcps_selected_plan'] ) ) {
+        // Buscar el campo del plan en múltiples lugares posibles
+        $selected_plan = null;
+        
+        // Intentar obtener el valor del plan de diferentes formas
+        if ( isset( $_POST['wcps_selected_plan'] ) ) {
+            $selected_plan = $_POST['wcps_selected_plan'];
+        } elseif ( isset( $_REQUEST['wcps_selected_plan'] ) ) {
+            $selected_plan = $_REQUEST['wcps_selected_plan'];
+        } elseif ( isset( $_POST['wcps_selected_plan_hidden'] ) ) {
+            $selected_plan = $_POST['wcps_selected_plan_hidden'];
+        }
+        
+        error_log('WCPS Debug - Plan seleccionado: ' . var_export($selected_plan, true));
+
+        // Si hay planes pero no se seleccionó ninguno
+        if ( $selected_plan === null || $selected_plan === '' ) {
+            error_log('WCPS Debug - No se seleccionó plan, mostrando error');
             wc_add_notice( __( 'Por favor, elige una opción de pago para continuar.', 'wc-credit-payment-system' ), 'error' );
             return false;
         }
 
-        $selected_plan = sanitize_text_field( $_POST['wcps_selected_plan'] );
-        
-        // Verificar que no esté vacío
-        if ( empty( $selected_plan ) ) {
-            wc_add_notice( __( 'Por favor, elige una opción de pago para continuar.', 'wc-credit-payment-system' ), 'error' );
-            return false;
-        }
+        $selected_plan = sanitize_text_field( $selected_plan );
 
         // Si se seleccionó pago completo, permitir
         if ( $selected_plan === 'full_payment' ) {
+            error_log('WCPS Debug - Pago completo seleccionado, permitiendo');
             return $passed;
         }
 
@@ -79,9 +102,12 @@ class WC_Credit_Frontend {
             }
 
             if ( ! $plan_exists ) {
+                error_log('WCPS Debug - Plan no válido para el producto');
                 wc_add_notice( __( 'El plan seleccionado no es válido para este producto.', 'wc-credit-payment-system' ), 'error' );
                 return false;
             }
+            
+            error_log('WCPS Debug - Plan válido, permitiendo');
         }
 
         return $passed;
